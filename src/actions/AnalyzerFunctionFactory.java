@@ -11,49 +11,25 @@ public class AnalyzerFunctionFactory {
 
     private AnalyzerFunctionFactory() {}
 
-    public static Function<List<LearningZone>, Integer> getReservationCountFunction() {
+    public static Function<List<LearningZone>, Integer> getCountFunction(Content c) {
         return (l -> {
             int count = 0;
             for(LearningZone lz : l) {
                 for(LearningSpace ls : lz.getLearningSpaces()) {
-                    count += ls.getReservations().size();
+                    count += c.get(ls).size();
                 }
             }
             return count;
         });
     }
 
-    public static Function<List<LearningZone>, Integer> getOccupancyCountFunction() {
-        return (l -> {
-            int count = 0;
-            for(LearningZone lz : l) {
-                for(LearningSpace ls : lz.getLearningSpaces()) {
-                    count += ls.getOccupancies().size();
-                }
-            }
-            return count;
-        });
-    }
-
-    public static Function<List<LearningZone>, Integer> getCancellationsCountFunction() {
-        return (l -> {
-            int count = 0;
-            for(LearningZone lz : l) {
-                for(LearningSpace ls : lz.getLearningSpaces()) {
-                    count += ls.getCancellations().size();
-                }
-            }
-            return count;
-        });
-    }
-
-    public static Function<List<LearningZone>, Duration> getAvgReservationLengthFunction() {
+    public static Function<List<LearningZone>, Duration> getAvgLengthFunction(Content c) {
         return (l -> {
             int count = 0;
             Duration d = Duration.ZERO;
             for(LearningZone lz : l) {
                 for(LearningSpace ls : lz.getLearningSpaces()) {
-                    for(Timeable t : ls.getReservations()) {
+                    for (Timeable t : c.getTimeable(ls)) {
                         count++;
                         d = d.plus(t.getDuration());
                     }
@@ -62,21 +38,4 @@ public class AnalyzerFunctionFactory {
             return d.dividedBy(count);
         });
     }
-
-    public static Function<List<LearningZone>, Duration> getAvgOccupancyLengthFunction() {
-        return (l -> {
-            int count = 0;
-            Duration d = Duration.ZERO;
-            for(LearningZone lz : l) {
-                for(LearningSpace ls : lz.getLearningSpaces()) {
-                    for(Timeable t : ls.getOccupancies()) {
-                        count++;
-                        d = d.plus(t.getDuration());
-                    }
-                }
-            }
-            return d.dividedBy(count);
-        });
-    }
-
 }

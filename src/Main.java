@@ -68,15 +68,15 @@ public class Main {
 
         System.out.println("----------------");
         System.out.println("Statistik:");
-        int nrOfReservations = p.analyze(AnalyzerFunctionFactory.getReservationCountFunction());
+        int nrOfReservations = p.analyze(AnalyzerFunctionFactory.getCountFunction(Content.RESERVATION));
         System.out.println("Anzahl an Reservierungen: " + nrOfReservations);
-        int nrOfOccupancies = p.analyze(AnalyzerFunctionFactory.getOccupancyCountFunction());
+        int nrOfOccupancies = p.analyze(AnalyzerFunctionFactory.getCountFunction(Content.OCCUPANCY));
         System.out.println("Anzahl an Belegungen: " + nrOfOccupancies);
-        int nrOfCancellations = p.analyze(AnalyzerFunctionFactory.getCancellationsCountFunction());
+        int nrOfCancellations = p.analyze(AnalyzerFunctionFactory.getCountFunction(Content.CANCELLATION));
         System.out.println("Anzahl an Stornierungen: " + nrOfCancellations + "\n");
-        Duration d = p.analyze(AnalyzerFunctionFactory.getAvgReservationLengthFunction());
+        Duration d = p.analyze(AnalyzerFunctionFactory.getAvgLengthFunction(Content.RESERVATION));
         System.out.println("Durchschnittliche Reservierungsdauer: " + d.getSeconds()/60 + " Minuten");
-        d = p.analyze(AnalyzerFunctionFactory.getAvgOccupancyLengthFunction());
+        d = p.analyze(AnalyzerFunctionFactory.getAvgLengthFunction(Content.OCCUPANCY));
         System.out.println("Durchschnittliche Belegungsdauer: " + d.getSeconds()/60 + " Minuten");
     }
 

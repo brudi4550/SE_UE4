@@ -40,9 +40,12 @@ public class Reservation extends Action implements Timeable {
      * @param reservationStart Start-DateTime of the Reservation
      * @param reservationEnd End-DateTime of the Reservation
      * @param nrOfPeople Number of people the Reservation was made for
-     * @param reservee Student that made the reservation:
+     * @param reservee Student that made the reservation
+     * @param creationTime the time the Action was created
      */
-    public Reservation(String nr, LocalDateTime reservationStart, LocalDateTime reservationEnd, int nrOfPeople, Student reservee) {
+    public Reservation(String nr, LocalDateTime reservationStart, LocalDateTime reservationEnd, int nrOfPeople,
+                       Student reservee, LocalDateTime creationTime) {
+        super(creationTime);
         this.nr = nr;
         this.reservationStart = reservationStart;
         this.reservationEnd = reservationEnd;
@@ -130,7 +133,7 @@ public class Reservation extends Action implements Timeable {
         strb.append(reservationStart.format(tf)).append(" bis ");
         strb.append(reservationEnd.format(tf)).append(" fuer ");
         strb.append(nrOfPeople).append(" ").append(person).append(" durch ");
-        strb.append(reservee.getStudentNr()).append(" ").append(super.getCreationDateTime().format(df));
+        strb.append(reservee.getStudentNr()).append(" am ").append(super.getCreationDateTime().format(df));
         strb.append(" um ").append(super.getCreationDateTime().format(tf));
         return strb.toString();
     }

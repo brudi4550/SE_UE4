@@ -1,5 +1,7 @@
 package actions;
 
+import java.time.LocalDateTime;
+
 /**
  * Class capturing a reservation if the subclass is
  * dependent on it.
@@ -16,8 +18,17 @@ public abstract class ReservationDependentAction extends Action {
      * Constructor for the reservation.
      * @param reservation The reservation to be captured
      */
-    public ReservationDependentAction(Reservation reservation) {
+    public ReservationDependentAction(Reservation reservation, LocalDateTime creationTime) {
+        super(creationTime);
         this.reservation = reservation;
+    }
+
+    /**
+     * Constructor with default creationDateTime, calling the more general constructor.
+     * @param reservation The reservation to be captured
+     */
+    public ReservationDependentAction(Reservation reservation) {
+        this(reservation, LocalDateTime.now());
     }
 
     /**

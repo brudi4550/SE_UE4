@@ -1,5 +1,6 @@
 package actions;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -13,9 +14,10 @@ public class Cancellation extends ReservationDependentAction {
      * Constructor for Cancellation.
      *
      * @param reservation Needed because Cancellation is a ReservationDependentAction.
+     * @param creationTime the time the Action was created
      */
-    public Cancellation(Reservation reservation) {
-        super(reservation);
+    public Cancellation(Reservation reservation, LocalDateTime creationTime) {
+        super(reservation, creationTime);
     }
 
     /**

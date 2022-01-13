@@ -145,7 +145,7 @@ public class LearningSpace {
 
     /**
      * Merges the lists reservations, occupancies and cancellations and sorts them
-     * by their creation Date.
+     * by their creation DateTime.
      * @return the merged list of reservations, occupancies and cancellations
      */
     private List<? extends Action> getSortedMergedLists() {

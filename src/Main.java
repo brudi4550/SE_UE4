@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 public class Main {
 
     public static void main(String[] args) {
-        //all actions use the default Action Constructor, therefore all creation Dates are set to the current LocalDateTime.
         LocalDate d1 = LocalDate.of(2021, 12, 1);
         LocalDate d2 = LocalDate.of(2021, 12, 31);
         Protocol p = new Protocol(d1, d2);
@@ -19,22 +18,25 @@ public class Main {
                                          LocalDateTime.of(2021, 12, 3, 9, 15),
                                          LocalDateTime.of(2021, 12, 3, 10, 0),
                                          3,
-                                         reservee);
+                                         reservee,
+                                         LocalDateTime.of(2021, 12, 1, 23, 18));
         reservee = new Student("K12345679");
         Reservation r2 = new Reservation("R47110815",
                                          LocalDateTime.of(2021, 12, 6, 9, 15),
                                          LocalDateTime.of(2021, 12, 6, 10, 0),
                                          1,
-                                         reservee);
+                                         reservee,
+                                         LocalDateTime.of(2021, 12, 1, 17, 53));
         Reservation r3 = new Reservation("R47110816",
                                          LocalDateTime.of(2021, 12, 6, 9, 15),
                                          LocalDateTime.of(2021, 12, 6, 10, 0),
                                          1,
-                                         reservee);
+                                         reservee,
+                                         LocalDateTime.of(2021, 12, 1, 18, 3));
         Occupancy o1 = new Occupancy(r1,
                                      LocalDateTime.of(2021, 12, 3, 9, 21),
                                      LocalDateTime.of(2021, 12, 3, 9, 48));
-        Cancellation c1 = new Cancellation(r2);
+        Cancellation c1 = new Cancellation(r2, LocalDateTime.of(2021, 12, 2, 18, 23));
         ls1.addReservation(r1);
         ls1.addReservation(r2);
         ls1.addReservation(r3);
@@ -49,7 +51,8 @@ public class Main {
                                          LocalDateTime.of(2021, 12, 4, 17, 30),
                                          LocalDateTime.of(2021, 12, 4, 18, 0),
                                          1,
-                                         reservee);
+                                         reservee,
+                                         LocalDateTime.of(2021, 12, 4, 17, 10));
         ls3.addReservation(r4);
         lz1.addLearningSpace(ls3);
         p.addLearningZone(lz1);
@@ -61,7 +64,8 @@ public class Main {
                                          LocalDateTime.of(2021, 12, 16, 12, 15),
                                          LocalDateTime.of(2021, 12, 16, 12, 45),
                                          5,
-                                         reservee);
+                                         reservee,
+                                         LocalDateTime.of(2021, 12, 15, 15, 20));
         ls1.addReservation(r5);
         ls2 = new LearningSpace(2, 4);
         lz2.addLearningSpace(ls1);

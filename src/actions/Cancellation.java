@@ -2,12 +2,27 @@ package actions;
 
 import java.time.format.DateTimeFormatter;
 
-public class Cancellation extends ReservationDependantAction {
+/**
+ * Represents a cancelled Reservation.
+ *
+ * @author GR47
+ */
+public class Cancellation extends ReservationDependentAction {
 
+    /**
+     * Constructor for Cancellation.
+     *
+     * @param reservation Needed because Cancellation is a ReservationDependentAction.
+     */
     public Cancellation(Reservation reservation) {
         super(reservation);
     }
 
+    /**
+     * String representation of the Cancellation.
+     *
+     * @return String representation.
+     */
     @Override
     public String toString() {
         StringBuilder strb = new StringBuilder();

@@ -6,14 +6,42 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class representing a reservation.
+ *
+ * @author GR47
+ */
 public class Reservation extends Action implements Timeable {
+    /**
+     * The reservation number.
+     */
     private final String nr;
+    /**
+     * The start DateTime of the reservation.
+     */
     private final LocalDateTime reservationStart;
+    /**
+     * The end DateTime of the reservation.
+     */
     private final LocalDateTime reservationEnd;
+    /**
+     * The number of people the reservation was made for.
+     */
     private final int nrOfPeople;
+    /**
+     * The student that made the reservation.
+     */
     private final Student reservee;
 
-    // no check if start < end, whoever uses the class needs to deal with that
+    /**
+     * Constructor for Reservation. The arguments will not be checked. The caller
+     * has to check beforehand that all values are valid.
+     * @param nr Reservation number
+     * @param reservationStart Start-DateTime of the Reservation
+     * @param reservationEnd End-DateTime of the Reservation
+     * @param nrOfPeople Number of people the Reservation was made for
+     * @param reservee Student that made the reservation:
+     */
     public Reservation(String nr, LocalDateTime reservationStart, LocalDateTime reservationEnd, int nrOfPeople, Student reservee) {
         this.nr = nr;
         this.reservationStart = reservationStart;
@@ -22,33 +50,75 @@ public class Reservation extends Action implements Timeable {
         this.reservee = reservee;
     }
 
+    /**
+     * Getter for the number of people the reservation was made for.
+     * @return number of people the reservation was made for
+     */
     public int getNrOfPeople() {
         return nrOfPeople;
     }
 
+    /**
+     * Getter for the reservee.
+     * @return The Student that made the reservation
+     */
     public Student getReservee() {
         return reservee;
     }
 
+    /**
+     * Getter for the reservation number.
+     * @return The reservation number
+     */
     public String getNr() {
         return nr;
     }
 
+    /**
+     * Getter for the start DateTime.
+     * @return a LocalDateTime object of the start point in time
+     */
     @Override
     public LocalDateTime getStart() {
         return reservationStart;
     }
 
+    /**
+     * Getter for the end DateTime.
+     * @return a LocalDateTime object of the end point in time
+     */
     @Override
     public LocalDateTime getEnd() {
         return reservationEnd;
     }
 
+    /**
+     * Getter for the Duration of the reservation.
+     * @return
+     */
     @Override
     public Duration getDuration() {
         return Duration.between(reservationStart, reservationEnd);
     }
 
+    /**
+     * Checks for equality according to the reservation number.
+     * @param o The object that is being compared
+     * @return True if the reservation number matches, false if it doesn't.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Reservation that = (Reservation) o;
+        return nr.equals(that.nr);
+    }
+
+    /**
+     * String representation of the Reservation.
+     * @return String representation
+     */
     @Override
     public String toString() {
         StringBuilder strb = new StringBuilder();

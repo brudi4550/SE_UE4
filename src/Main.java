@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public class Main {
 
     public static void main(String[] args) {
+        //all actions use the default Action Constructor, therefore all creation Dates are set to the current LocalDateTime.
         LocalDate d1 = LocalDate.of(2021, 12, 1);
         LocalDate d2 = LocalDate.of(2021, 12, 31);
         Protocol p = new Protocol(d1, d2);
@@ -31,10 +32,12 @@ public class Main {
                                          1,
                                          reservee);
         Occupancy o1 = new Occupancy(r1,
-                                 LocalDateTime.of(2021, 12, 3, 9, 21),
-                                 LocalDateTime.of(2021, 12, 3, 9, 48));
+                                     LocalDateTime.of(2021, 12, 3, 9, 21),
+                                     LocalDateTime.of(2021, 12, 3, 9, 48));
         Cancellation c1 = new Cancellation(r2);
-        ls1.addReservation(r1, r2, r3);
+        ls1.addReservation(r1);
+        ls1.addReservation(r2);
+        ls1.addReservation(r3);
         ls1.addOccupancy(o1);
         ls1.addCancellation(c1);
         lz1.addLearningSpace(ls1);
@@ -68,15 +71,16 @@ public class Main {
 
         System.out.println("----------------");
         System.out.println("Statistik:");
-        int nrOfReservations = p.analyze(AnalyzerFunctionFactory.getCountFunction(Content.RESERVATION));
+
+        int nrOfReservations = p.apply(AnalyzerFunctionFactory.getCountFunction(Content.RESERVATION));
         System.out.println("Anzahl an Reservierungen: " + nrOfReservations);
-        int nrOfOccupancies = p.analyze(AnalyzerFunctionFactory.getCountFunction(Content.OCCUPANCY));
+        int nrOfOccupancies = p.apply(AnalyzerFunctionFactory.getCountFunction(Content.OCCUPANCY));
         System.out.println("Anzahl an Belegungen: " + nrOfOccupancies);
-        int nrOfCancellations = p.analyze(AnalyzerFunctionFactory.getCountFunction(Content.CANCELLATION));
+        int nrOfCancellations = p.apply(AnalyzerFunctionFactory.getCountFunction(Content.CANCELLATION));
         System.out.println("Anzahl an Stornierungen: " + nrOfCancellations + "\n");
-        Duration d = p.analyze(AnalyzerFunctionFactory.getAvgLengthFunction(Content.RESERVATION));
+        Duration d = p.apply(AnalyzerFunctionFactory.getAvgDurationFunction(Content.RESERVATION));
         System.out.println("Durchschnittliche Reservierungsdauer: " + d.getSeconds()/60 + " Minuten");
-        d = p.analyze(AnalyzerFunctionFactory.getAvgLengthFunction(Content.OCCUPANCY));
+        d = p.apply(AnalyzerFunctionFactory.getAvgDurationFunction(Content.OCCUPANCY));
         System.out.println("Durchschnittliche Belegungsdauer: " + d.getSeconds()/60 + " Minuten");
     }
 

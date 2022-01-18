@@ -1,0 +1,194 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Occupancy</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">actions</a>
+</div>
+
+<h1>Coverage Summary for Class: Occupancy (actions)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Occupancy</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (17/17)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package actions;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import java.time.Duration;
+<i class="no-highlight">4</i>&nbsp;import java.time.LocalDateTime;
+<i class="no-highlight">5</i>&nbsp;import java.time.format.DateTimeFormatter;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;/**
+<i class="no-highlight">8</i>&nbsp; * Class representing an Occupancy.
+<i class="no-highlight">9</i>&nbsp; * Always references a given Reservation.
+<i class="no-highlight">10</i>&nbsp; *
+<i class="no-highlight">11</i>&nbsp; * @author GR47
+<i class="no-highlight">12</i>&nbsp; */
+<i class="no-highlight">13</i>&nbsp;public class Occupancy extends ReservationDependentAction implements Timeable {
+<i class="no-highlight">14</i>&nbsp;    /**
+<i class="no-highlight">15</i>&nbsp;     * LocalDateTimes representing the start and end point in time of the Occupancy.
+<i class="no-highlight">16</i>&nbsp;     * Needed for implementing Timeable methods.
+<i class="no-highlight">17</i>&nbsp;     */
+<i class="no-highlight">18</i>&nbsp;    private final LocalDateTime start;
+<i class="no-highlight">19</i>&nbsp;    private final LocalDateTime end;
+<i class="no-highlight">20</i>&nbsp;
+<i class="no-highlight">21</i>&nbsp;    /**
+<i class="no-highlight">22</i>&nbsp;     * Constructor for Occupancy.
+<i class="no-highlight">23</i>&nbsp;     *
+<i class="no-highlight">24</i>&nbsp;     * @param reservation Referenced reservation
+<i class="no-highlight">25</i>&nbsp;     * @param start Start DateTime of the Occupancy
+<i class="no-highlight">26</i>&nbsp;     * @param end End DateTime of the Occupancy
+<i class="no-highlight">27</i>&nbsp;     * @throws IllegalArgumentException if start is before end or either argument is null.
+<i class="no-highlight">28</i>&nbsp;     */
+<i class="no-highlight">29</i>&nbsp;    public Occupancy(Reservation reservation, LocalDateTime start, LocalDateTime end) throws IllegalArgumentException {
+<b class="fc"><i class="no-highlight">30</i>&nbsp;        super(reservation);</b>
+<b class="fc"><i class="no-highlight">31</i>&nbsp;        if(start == null || end == null)</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;            throw new IllegalArgumentException(&quot;start and end can&#39;t be null.&quot;);</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        if(start.isAfter(end)) {</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;            throw new IllegalArgumentException(&quot;start can&#39;t be before end.&quot;);</b>
+<i class="no-highlight">35</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">36</i>&nbsp;        this.start = start;</b>
+<b class="fc"><i class="no-highlight">37</i>&nbsp;        this.end = end;</b>
+<i class="no-highlight">38</i>&nbsp;    }
+<i class="no-highlight">39</i>&nbsp;
+<i class="no-highlight">40</i>&nbsp;    /**
+<i class="no-highlight">41</i>&nbsp;     * Getter for the start DateTime of the occupancy.
+<i class="no-highlight">42</i>&nbsp;     * Implements the specified method of Timeable.
+<i class="no-highlight">43</i>&nbsp;     *
+<i class="no-highlight">44</i>&nbsp;     * @return LocalDateTime
+<i class="no-highlight">45</i>&nbsp;     */
+<i class="no-highlight">46</i>&nbsp;    @Override
+<i class="no-highlight">47</i>&nbsp;    public LocalDateTime getStart() {
+<b class="fc"><i class="no-highlight">48</i>&nbsp;        return start;</b>
+<i class="no-highlight">49</i>&nbsp;    }
+<i class="no-highlight">50</i>&nbsp;
+<i class="no-highlight">51</i>&nbsp;
+<i class="no-highlight">52</i>&nbsp;    /**
+<i class="no-highlight">53</i>&nbsp;     * Getter for the end DateTime of the occupancy.
+<i class="no-highlight">54</i>&nbsp;     * Implements the specified method of Timeable.
+<i class="no-highlight">55</i>&nbsp;     *
+<i class="no-highlight">56</i>&nbsp;     * @return LocalDateTime
+<i class="no-highlight">57</i>&nbsp;     */
+<i class="no-highlight">58</i>&nbsp;    @Override
+<i class="no-highlight">59</i>&nbsp;    public LocalDateTime getEnd() {
+<b class="fc"><i class="no-highlight">60</i>&nbsp;        return end;</b>
+<i class="no-highlight">61</i>&nbsp;    }
+<i class="no-highlight">62</i>&nbsp;
+<i class="no-highlight">63</i>&nbsp;    /**
+<i class="no-highlight">64</i>&nbsp;     * Getter for the duration of the occupancy.
+<i class="no-highlight">65</i>&nbsp;     * Implements the specified method of Timeable.
+<i class="no-highlight">66</i>&nbsp;     *
+<i class="no-highlight">67</i>&nbsp;     * @return Duration of the occupancy
+<i class="no-highlight">68</i>&nbsp;     */
+<i class="no-highlight">69</i>&nbsp;    @Override
+<i class="no-highlight">70</i>&nbsp;    public Duration getDuration() {
+<b class="fc"><i class="no-highlight">71</i>&nbsp;        return Duration.between(start, end);</b>
+<i class="no-highlight">72</i>&nbsp;    }
+<i class="no-highlight">73</i>&nbsp;
+<i class="no-highlight">74</i>&nbsp;    /**
+<i class="no-highlight">75</i>&nbsp;     * String representation of the Occupancy.
+<i class="no-highlight">76</i>&nbsp;     * @return String representation
+<i class="no-highlight">77</i>&nbsp;     */
+<i class="no-highlight">78</i>&nbsp;    @Override
+<i class="no-highlight">79</i>&nbsp;    public String toString() {
+<b class="fc"><i class="no-highlight">80</i>&nbsp;        StringBuilder strb = new StringBuilder();</b>
+<b class="fc"><i class="no-highlight">81</i>&nbsp;        DateTimeFormatter df = DateTimeFormatter.ofPattern(&quot;dd.MM.yyyy&quot;);</b>
+<b class="fc"><i class="no-highlight">82</i>&nbsp;        DateTimeFormatter tf = DateTimeFormatter.ofPattern(&quot;HH:mm&quot;);</b>
+<b class="fc"><i class="no-highlight">83</i>&nbsp;        strb.append(&quot;Belegung am &quot;).append(start.format(df)).append(&quot; von &quot;);</b>
+<b class="fc"><i class="no-highlight">84</i>&nbsp;        strb.append(start.format(tf)).append(&quot; bis &quot;).append(end.format(tf));</b>
+<b class="fc"><i class="no-highlight">85</i>&nbsp;        strb.append(&quot; mit Reservierung &quot;).append(super.getReservation().getNr());</b>
+<b class="fc"><i class="no-highlight">86</i>&nbsp;        return strb.toString();</b>
+<i class="no-highlight">87</i>&nbsp;    }
+<i class="no-highlight">88</i>&nbsp;
+<i class="no-highlight">89</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-01-18 21:48</div>
+</div>
+</body>
+</html>

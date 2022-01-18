@@ -1,0 +1,5 @@
+-Aufgrund von Bewertung der UE4 null Checks für alle Klassen hinzugefügt.
+-Aufgrund von Bewertung der UE4 Checks für Start und Endzeitpunkte hinzugefügt
+sowie Überprüfung der Matrikelnummer.
+-Content enum: allgemeine Methoden waren nicht abstract, obwohl beide nur null
+zurückgeben

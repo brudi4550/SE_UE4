@@ -1,0 +1,289 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > LearningSpace</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">general</a>
+</div>
+
+<h1>Coverage Summary for Class: LearningSpace (general)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LearningSpace</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (44/44)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package general;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import actions.*;
+<i class="no-highlight">4</i>&nbsp;
+<i class="no-highlight">5</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">6</i>&nbsp;import java.util.Collection;
+<i class="no-highlight">7</i>&nbsp;import java.util.Comparator;
+<i class="no-highlight">8</i>&nbsp;import java.util.List;
+<i class="no-highlight">9</i>&nbsp;import java.util.stream.Collectors;
+<i class="no-highlight">10</i>&nbsp;import java.util.stream.Stream;
+<i class="no-highlight">11</i>&nbsp;
+<i class="no-highlight">12</i>&nbsp;/**
+<i class="no-highlight">13</i>&nbsp; * Class representing a learning space. Normally packaged
+<i class="no-highlight">14</i>&nbsp; * inside a LearningZone.
+<i class="no-highlight">15</i>&nbsp; * There are intentionally no remove methods provided
+<i class="no-highlight">16</i>&nbsp; * for the List fields. Reservations should be cancelled if desired.
+<i class="no-highlight">17</i>&nbsp; *
+<i class="no-highlight">18</i>&nbsp; * @author GR47
+<i class="no-highlight">19</i>&nbsp; */
+<i class="no-highlight">20</i>&nbsp;public class LearningSpace {
+<i class="no-highlight">21</i>&nbsp;    /**
+<i class="no-highlight">22</i>&nbsp;     * The number of this learning space.
+<i class="no-highlight">23</i>&nbsp;     */
+<i class="no-highlight">24</i>&nbsp;    private final int nr;
+<i class="no-highlight">25</i>&nbsp;    /**
+<i class="no-highlight">26</i>&nbsp;     * The capacity of this learning space.
+<i class="no-highlight">27</i>&nbsp;     */
+<i class="no-highlight">28</i>&nbsp;    private final int capacity;
+<i class="no-highlight">29</i>&nbsp;    /**
+<i class="no-highlight">30</i>&nbsp;     * A list of reservations made for this learning space.
+<i class="no-highlight">31</i>&nbsp;     */
+<i class="no-highlight">32</i>&nbsp;    private final List&lt;Reservation&gt; reservations;
+<i class="no-highlight">33</i>&nbsp;    /**
+<i class="no-highlight">34</i>&nbsp;     * A list of actually occurred occupancies for this learning space.
+<i class="no-highlight">35</i>&nbsp;     */
+<i class="no-highlight">36</i>&nbsp;    private final List&lt;Occupancy&gt; occupancies;
+<i class="no-highlight">37</i>&nbsp;    /**
+<i class="no-highlight">38</i>&nbsp;     * A list of cancellations made for this learning space.
+<i class="no-highlight">39</i>&nbsp;     */
+<i class="no-highlight">40</i>&nbsp;    private final List&lt;Cancellation&gt; cancellations;
+<i class="no-highlight">41</i>&nbsp;
+<i class="no-highlight">42</i>&nbsp;    /**
+<i class="no-highlight">43</i>&nbsp;     * Constructor for a LearningSpace.
+<i class="no-highlight">44</i>&nbsp;     * @param nr the number of this LearningSpace
+<i class="no-highlight">45</i>&nbsp;     * @param capacity the capacity for this LearningSpace.
+<i class="no-highlight">46</i>&nbsp;     * @throws IllegalArgumentException if nr or capacity is negative.
+<i class="no-highlight">47</i>&nbsp;     */
+<b class="fc"><i class="no-highlight">48</i>&nbsp;    public LearningSpace(int nr, int capacity) {</b>
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        if(nr &lt; 1 || capacity &lt; 1)</b>
+<b class="fc"><i class="no-highlight">50</i>&nbsp;            throw new IllegalArgumentException(&quot;nr and capacity can&#39;t be negative.&quot;);</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;        this.nr = nr;</b>
+<b class="fc"><i class="no-highlight">52</i>&nbsp;        this.capacity = capacity;</b>
+<b class="fc"><i class="no-highlight">53</i>&nbsp;        reservations = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">54</i>&nbsp;        occupancies = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">55</i>&nbsp;        cancellations = new ArrayList&lt;&gt;();</b>
+<i class="no-highlight">56</i>&nbsp;    }
+<i class="no-highlight">57</i>&nbsp;
+<i class="no-highlight">58</i>&nbsp;    /**
+<i class="no-highlight">59</i>&nbsp;     * Add a reservation to the list of reservations for this LearningSpace.
+<i class="no-highlight">60</i>&nbsp;     *
+<i class="no-highlight">61</i>&nbsp;     * @param r the reservation to be added.
+<i class="no-highlight">62</i>&nbsp;     * @return true if the reservation has been added, i.e. a reservation with this reservation
+<i class="no-highlight">63</i>&nbsp;     * number is not already in the list, false if otherwise.
+<i class="no-highlight">64</i>&nbsp;     * @throws IllegalArgumentException if reservation is null
+<i class="no-highlight">65</i>&nbsp;     */
+<i class="no-highlight">66</i>&nbsp;    public boolean addReservation(Reservation r) throws IllegalArgumentException {
+<b class="fc"><i class="no-highlight">67</i>&nbsp;        if(r == null)</b>
+<b class="fc"><i class="no-highlight">68</i>&nbsp;            throw new IllegalArgumentException(&quot;reservation can&#39;t be null&quot;);</b>
+<b class="fc"><i class="no-highlight">69</i>&nbsp;        if(!reservations.contains(r)) {</b>
+<b class="fc"><i class="no-highlight">70</i>&nbsp;            reservations.add(r);</b>
+<b class="fc"><i class="no-highlight">71</i>&nbsp;            return true;</b>
+<i class="no-highlight">72</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">73</i>&nbsp;        return false;</b>
+<i class="no-highlight">74</i>&nbsp;    }
+<i class="no-highlight">75</i>&nbsp;
+<i class="no-highlight">76</i>&nbsp;    /**
+<i class="no-highlight">77</i>&nbsp;     * Add an occupancy to the list of occupancies for this LearningSpace. Only adds
+<i class="no-highlight">78</i>&nbsp;     * the occupancy if the reservation the occupancy is referencing can be found in the list
+<i class="no-highlight">79</i>&nbsp;     * of reservations of this LearningSpace and the reservation has not yet been cancelled.
+<i class="no-highlight">80</i>&nbsp;     *
+<i class="no-highlight">81</i>&nbsp;     * @param o the occupancy to be added.
+<i class="no-highlight">82</i>&nbsp;     * @return true if the occupancy has been added, false otherwise.
+<i class="no-highlight">83</i>&nbsp;     * @throws IllegalArgumentException if the occupancy is null
+<i class="no-highlight">84</i>&nbsp;     *
+<i class="no-highlight">85</i>&nbsp;     */
+<i class="no-highlight">86</i>&nbsp;    public boolean addOccupancy(Occupancy o) throws IllegalArgumentException {
+<b class="fc"><i class="no-highlight">87</i>&nbsp;        if(o == null)</b>
+<b class="fc"><i class="no-highlight">88</i>&nbsp;            throw new IllegalArgumentException(&quot;occupancy can&#39;t be null.&quot;);</b>
+<b class="fc"><i class="no-highlight">89</i>&nbsp;        if (reservations.contains(o.getReservation()) &amp;&amp;</b>
+<b class="fc"><i class="no-highlight">90</i>&nbsp;                cancellations.stream().noneMatch(c -&gt; c.getReservation().equals(o.getReservation()))) {</b>
+<b class="fc"><i class="no-highlight">91</i>&nbsp;            occupancies.add(o);</b>
+<b class="fc"><i class="no-highlight">92</i>&nbsp;            return true;</b>
+<i class="no-highlight">93</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">94</i>&nbsp;        return false;</b>
+<i class="no-highlight">95</i>&nbsp;    }
+<i class="no-highlight">96</i>&nbsp;
+<i class="no-highlight">97</i>&nbsp;    /**
+<i class="no-highlight">98</i>&nbsp;     * Add a cancellation to the list of cancellations for this LearningSpace. Only adds
+<i class="no-highlight">99</i>&nbsp;     * the cancellation if the reservation the cancellation is referencing can be found in the list
+<i class="no-highlight">100</i>&nbsp;     * of reservations of this LearningSpace and there is no occupancy referencing the same reservation
+<i class="no-highlight">101</i>&nbsp;     * in the list of occupancies.
+<i class="no-highlight">102</i>&nbsp;     *
+<i class="no-highlight">103</i>&nbsp;     * @param c the cancellation to be added.
+<i class="no-highlight">104</i>&nbsp;     * @return true if the cancellation has been added, false otherwise.
+<i class="no-highlight">105</i>&nbsp;     * @throws IllegalArgumentException if the cancellation is null
+<i class="no-highlight">106</i>&nbsp;     */
+<i class="no-highlight">107</i>&nbsp;    public boolean addCancellation(Cancellation c) {
+<b class="fc"><i class="no-highlight">108</i>&nbsp;        if(c == null)</b>
+<b class="fc"><i class="no-highlight">109</i>&nbsp;           throw new IllegalArgumentException(&quot;cancellation can&#39;t be null&quot;);</b>
+<b class="fc"><i class="no-highlight">110</i>&nbsp;        if (reservations.contains(c.getReservation()) &amp;&amp;</b>
+<b class="fc"><i class="no-highlight">111</i>&nbsp;                occupancies.stream().noneMatch(o -&gt; o.getReservation().equals(c.getReservation()))) {</b>
+<b class="fc"><i class="no-highlight">112</i>&nbsp;           cancellations.add(c);</b>
+<b class="fc"><i class="no-highlight">113</i>&nbsp;           return true;</b>
+<i class="no-highlight">114</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">115</i>&nbsp;        return false;</b>
+<i class="no-highlight">116</i>&nbsp;    }
+<i class="no-highlight">117</i>&nbsp;
+<i class="no-highlight">118</i>&nbsp;    /**
+<i class="no-highlight">119</i>&nbsp;     * Getter for the number of this LearningSpace.
+<i class="no-highlight">120</i>&nbsp;     * @return the number of this LearningSpace.
+<i class="no-highlight">121</i>&nbsp;     */
+<i class="no-highlight">122</i>&nbsp;    public int getNr() {
+<b class="fc"><i class="no-highlight">123</i>&nbsp;        return nr;</b>
+<i class="no-highlight">124</i>&nbsp;    }
+<i class="no-highlight">125</i>&nbsp;
+<i class="no-highlight">126</i>&nbsp;    /**
+<i class="no-highlight">127</i>&nbsp;     * Getter for the capacity of this LearningSpace.
+<i class="no-highlight">128</i>&nbsp;     * @return the capacity of this LearningSpace.
+<i class="no-highlight">129</i>&nbsp;     */
+<i class="no-highlight">130</i>&nbsp;    public int getCapacity() {
+<b class="fc"><i class="no-highlight">131</i>&nbsp;        return capacity;</b>
+<i class="no-highlight">132</i>&nbsp;    }
+<i class="no-highlight">133</i>&nbsp;
+<i class="no-highlight">134</i>&nbsp;    /**
+<i class="no-highlight">135</i>&nbsp;     * Getter for the list of reservations in this LearningSpace.
+<i class="no-highlight">136</i>&nbsp;     * @return the list of reservations in this LearningSpace.
+<i class="no-highlight">137</i>&nbsp;     */
+<i class="no-highlight">138</i>&nbsp;    public List&lt;Reservation&gt; getReservations() {
+<b class="fc"><i class="no-highlight">139</i>&nbsp;        return reservations;</b>
+<i class="no-highlight">140</i>&nbsp;    }
+<i class="no-highlight">141</i>&nbsp;
+<i class="no-highlight">142</i>&nbsp;    /**
+<i class="no-highlight">143</i>&nbsp;     * Getter for the list of occupancies in this LearningSpace.
+<i class="no-highlight">144</i>&nbsp;     * @return the list of occupancies in this LearningSpace.
+<i class="no-highlight">145</i>&nbsp;     */
+<i class="no-highlight">146</i>&nbsp;    public List&lt;Occupancy&gt; getOccupancies() {
+<b class="fc"><i class="no-highlight">147</i>&nbsp;        return occupancies;</b>
+<i class="no-highlight">148</i>&nbsp;    }
+<i class="no-highlight">149</i>&nbsp;
+<i class="no-highlight">150</i>&nbsp;    /**
+<i class="no-highlight">151</i>&nbsp;     * Getter for the list of cancellations in this LearningSpace.
+<i class="no-highlight">152</i>&nbsp;     * @return the list of cancellations in this LearningSpace.
+<i class="no-highlight">153</i>&nbsp;     */
+<i class="no-highlight">154</i>&nbsp;    public List&lt;Cancellation&gt; getCancellations() {
+<b class="fc"><i class="no-highlight">155</i>&nbsp;        return cancellations;</b>
+<i class="no-highlight">156</i>&nbsp;    }
+<i class="no-highlight">157</i>&nbsp;
+<i class="no-highlight">158</i>&nbsp;    /**
+<i class="no-highlight">159</i>&nbsp;     * Merges the lists reservations, occupancies and cancellations and sorts them
+<i class="no-highlight">160</i>&nbsp;     * by their creation DateTime.
+<i class="no-highlight">161</i>&nbsp;     * @return the merged list of reservations, occupancies and cancellations
+<i class="no-highlight">162</i>&nbsp;     */
+<i class="no-highlight">163</i>&nbsp;    private List&lt;? extends Action&gt; getSortedMergedLists() {
+<b class="fc"><i class="no-highlight">164</i>&nbsp;        return Stream.of(reservations, occupancies, cancellations)</b>
+<b class="fc"><i class="no-highlight">165</i>&nbsp;                .flatMap(Collection::stream)</b>
+<b class="fc"><i class="no-highlight">166</i>&nbsp;                .sorted(Comparator.comparing(Action::getCreationDateTime))</b>
+<b class="fc"><i class="no-highlight">167</i>&nbsp;                .collect(Collectors.toList());</b>
+<i class="no-highlight">168</i>&nbsp;    }
+<i class="no-highlight">169</i>&nbsp;
+<i class="no-highlight">170</i>&nbsp;    /**
+<i class="no-highlight">171</i>&nbsp;     * String representation of this LearningSpace.
+<i class="no-highlight">172</i>&nbsp;     * @return String representing this LearningSpace.
+<i class="no-highlight">173</i>&nbsp;     */
+<i class="no-highlight">174</i>&nbsp;    @Override
+<i class="no-highlight">175</i>&nbsp;    public String toString() {
+<b class="fc"><i class="no-highlight">176</i>&nbsp;        StringBuilder strb = new StringBuilder();</b>
+<b class="fc"><i class="no-highlight">177</i>&nbsp;        strb.append(&quot;Lernplatz &quot;).append(nr).append(&quot; fuer &quot;);</b>
+<b class="fc"><i class="no-highlight">178</i>&nbsp;        strb.append(capacity).append(&quot; Personen\n&quot;);</b>
+<b class="fc"><i class="no-highlight">179</i>&nbsp;        for(Action a : getSortedMergedLists()) {</b>
+<b class="fc"><i class="no-highlight">180</i>&nbsp;            strb.append(a.toString().indent(8));</b>
+<b class="fc"><i class="no-highlight">181</i>&nbsp;        }</b>
+<b class="fc"><i class="no-highlight">182</i>&nbsp;        return strb.toString();</b>
+<i class="no-highlight">183</i>&nbsp;    }
+<i class="no-highlight">184</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-01-18 21:48</div>
+</div>
+</body>
+</html>

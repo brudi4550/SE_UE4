@@ -1,4 +1,0 @@
-Hinsichtlich der Erweiterbarkeit sehen wir eigentlich  
-keine Einschränkungen. Funktionalitäten zur Berechnung verschiedenster
-Werte bei einem gegebenen Protokoll sind bereits implementiert, wobei
-diese Funktionalität beliebig einsatzbar und erweiterbar ist.
